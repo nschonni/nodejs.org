@@ -208,7 +208,7 @@ ssh -L 9221:localhost:9229 user@remote.example.com
 ### [node-inspector](https://github.com/node-inspector/node-inspector)
 
 قم بتصحيح الأخطاء في تطبيق Node.js الخاص بواسطة الـ <span dir="ltr">Chrome DevTools</span> و ذلك باستعمال عملية وسيطة تقوم بتحويل
-بروتوكول المدقق المستعمل في Chromium إلى بروتوكول تصحيح الأخطاء في الـ V8 المستعمل في الـ Node.js
+[بروتوكول المدقق][] المستعمل في Chromium إلى بروتوكول تصحيح الأخطاء في الـ V8 المستعمل في الـ Node.js
 
 <!-- refs -->
 
