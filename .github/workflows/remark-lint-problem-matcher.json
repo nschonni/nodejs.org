@@ -1,7 +1,7 @@
 {
   "problemMatcher": [
     {
-      "owner": "remark-lint",
+      "owner": "remark",
       "pattern": [
         {
           "regexp": "^(?:\\x1b\\[\\d+m)*(.+?)(?:\\x1b\\[\\d+m)*$",
