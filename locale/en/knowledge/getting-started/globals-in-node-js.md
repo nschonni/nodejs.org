@@ -13,7 +13,7 @@ Node.js has a number of built-in global identifiers that every Node.js developer
 First, let's go through the list of 'true globals':
 
 * `global` - The global namespace. Setting a property to this namespace makes it globally visible within the running process.
-* `process` - The Node.js built-in `process` module, which provides interaction with the current Node.js process. [Read More](/en/knowledge/getting-started/the-process-module/)
+* `process` - The Node.js built-in `process` module, which provides interaction with the current Node.js process. [Read More  ](/en/knowledge/getting-started/the-process-module/)
 * `console` - The Node.js built-in `console` module, which wraps various STDIO functionality in a browser-like way. [Read More](/en/knowledge/getting-started/the-console-module/)
 * `setTimeout()`, `clearTimeout()`, `setInterval()`, `clearInterval()` - The built-in timer functions are globals. [Read More](/en/knowledge/javascript-conventions/what-are-the-built-in-timer-functions/)
 
