@@ -1,15 +1,15 @@
-;(function () {
-  var langPickerTogglerElement = document.querySelector('.lang-picker-toggler')
-  var langPickerElement = document.querySelector('.lang-picker')
-  var langElements = langPickerElement.querySelectorAll('button')
+(function () {
+  const langPickerTogglerElement = document.querySelector('.lang-picker-toggler')
+  const langPickerElement = document.querySelector('.lang-picker')
+  const langElements = langPickerElement.querySelectorAll('button')
   // Get the current URL language
-  var currentLang = window.location.pathname.split('/')[1] || 'en'
-  var currentLangElement = null
+  const currentLang = window.location.pathname.split('/')[1] || 'en'
+  let currentLangElement = null
 
   Array.prototype.forEach.call(langElements, function (el) {
     if (el.getAttribute('data-lang') !== currentLang) {
       el.addEventListener('click', function (e) {
-        var newLocale = (e.target && e.target.dataset && e.target.dataset.lang) || 'en'
+        const newLocale = (e.target && e.target.dataset && e.target.dataset.lang) || 'en'
         window.location.assign(window.location.pathname.replace(/\/[a-zA-Z-]+/, '/' + newLocale))
       })
     } else {
@@ -31,7 +31,7 @@
 })()
 
 ;(function () {
-  var scrollToTop = document.getElementById('scroll-to-top');
+  const scrollToTop = document.getElementById('scroll-to-top');
 
   (window.onscroll = function () {
     window.requestAnimationFrame(function () {
@@ -46,19 +46,19 @@
 })()
 
 ;(function () {
-  var contributorCard = document.querySelector('.contributor-card')
+  const contributorCard = document.querySelector('.contributor-card')
 
   if (!contributorCard) {
     return
   }
 
-  var contributorAvatar = contributorCard.querySelector('#contributor-avatar')
-  var contributorUsername = contributorCard.querySelector('#contributor-username')
-  var contributorContributions = contributorCard.querySelector('#contributor-contributions')
-  var loadingSpinner = contributorCard.querySelector('.spinner-border')
+  const contributorAvatar = contributorCard.querySelector('#contributor-avatar')
+  const contributorUsername = contributorCard.querySelector('#contributor-username')
+  const contributorContributions = contributorCard.querySelector('#contributor-contributions')
+  const loadingSpinner = contributorCard.querySelector('.spinner-border')
 
   if (window.IntersectionObserver) {
-    var observer = new window.IntersectionObserver(function (entries) {
+    const observer = new window.IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.intersectionRatio > 0.5) {
           // In viewport, fetch a random contributor
@@ -78,9 +78,9 @@
   }
 
   function fetchRandomContributor () {
-    var maxContributors
-    var fetchDate
-    var needToRefetch = false
+    let maxContributors
+    let fetchDate
+    let needToRefetch = false
 
     if (window.localStorage) {
       maxContributors = window.localStorage.getItem('max_contributors')
@@ -107,15 +107,15 @@
   }
 
   function getMaxContributors (callback) {
-    var xhr = new window.XMLHttpRequest()
+    const xhr = new window.XMLHttpRequest()
     xhr.open('GET', 'https://api.github.com/repos/nodejs/node/contributors?per_page=1', true)
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
           // Get Headers Links last page to generate a random contributor
-          var links = linkParser(xhr.getResponseHeader('Link'))
-          var randomPage = Math.floor(Math.random() * Math.floor(parseInt(links.last.page, 10))) + 1
+          const links = linkParser(xhr.getResponseHeader('Link'))
+          const randomPage = Math.floor(Math.random() * Math.floor(parseInt(links.last.page, 10))) + 1
 
           if (window.localStorage) {
             window.localStorage.setItem('fetch_date', Date.now())
@@ -131,13 +131,13 @@
   }
 
   function getContributor (randomPage) {
-    var xhr = new window.XMLHttpRequest()
+    const xhr = new window.XMLHttpRequest()
     xhr.open('GET', 'https://api.github.com/repos/nodejs/node/contributors?per_page=1&page=' + randomPage, true)
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
-          var contributor = JSON.parse(xhr.responseText)[0]
+          const contributor = JSON.parse(xhr.responseText)[0]
 
           // Remove loading spinner and show avatar
           loadingSpinner.parentNode.removeChild(loadingSpinner)
@@ -159,9 +159,9 @@
   }
 
   function linkParser (linkHeader) {
-    var regex = /<([^?]+\?per_page=1&[a-z]+=([\d]+))>;[\s]*rel="([a-z]+)"/g
-    var array = []
-    var object = {}
+    const regex = /<([^?]+\?per_page=1&[a-z]+=([\d]+))>;[\s]*rel="([a-z]+)"/g
+    let array = []
+    const object = {}
 
     while ((array = regex.exec(linkHeader)) !== null) {
       object[array[3]] = {
@@ -177,23 +177,23 @@
 ;(function (d, n) {
   'use strict'
 
-  var osMatch = n.platform.match(/(Win|Mac|Linux)/)
-  var os = (osMatch && osMatch[1]) || ''
-  var arch = n.userAgent.match(/x86_64|Win64|WOW64/) ||
+  const osMatch = n.platform.match(/(Win|Mac|Linux)/)
+  const os = (osMatch && osMatch[1]) || ''
+  const arch = n.userAgent.match(/x86_64|Win64|WOW64/) ||
     n.cpuClass === 'x64'
     ? 'x64'
     : 'x86'
-  var text = 'textContent' in d ? 'textContent' : 'innerText'
-  var buttons = d.querySelectorAll('.home-downloadbutton')
-  var downloadHead = d.getElementById('home-downloadhead')
-  var dlLocal
+  const text = 'textContent' in d ? 'textContent' : 'innerText'
+  const buttons = d.querySelectorAll('.home-downloadbutton')
+  const downloadHead = d.getElementById('home-downloadhead')
+  let dlLocal
 
   function versionIntoHref (nodeList, filename) {
-    var linkEls = Array.prototype.slice.call(nodeList)
-    var version
-    var el
+    const linkEls = Array.prototype.slice.call(nodeList)
+    let version
+    let el
 
-    for (var i = 0; i < linkEls.length; i++) {
+    for (let i = 0; i < linkEls.length; i++) {
       version = linkEls[i].getAttribute('data-version')
       el = linkEls[i]
 
@@ -225,9 +225,9 @@
   }
 
   // Windows button on download page
-  var winButton = d.getElementById('windows-downloadbutton')
+  const winButton = d.getElementById('windows-downloadbutton')
   if (winButton && os === 'Win') {
-    var winText = winButton.getElementsByTagName('p')[0]
+    const winText = winButton.getElementsByTagName('p')[0]
     winButton.href = winButton.href.replace(/x(86|64)/, arch)
     winText[text] = winText[text].replace(/x(86|64)/, arch)
   }
