@@ -1,5 +1,7 @@
-(function () {
-  const langPickerTogglerElement = document.querySelector('.lang-picker-toggler')
+;(function () {
+  const langPickerTogglerElement = document.querySelector(
+    '.lang-picker-toggler'
+  )
   const langPickerElement = document.querySelector('.lang-picker')
   const langElements = langPickerElement.querySelectorAll('button')
   // Get the current URL language
@@ -9,8 +11,11 @@
   Array.prototype.forEach.call(langElements, function (el) {
     if (el.getAttribute('data-lang') !== currentLang) {
       el.addEventListener('click', function (e) {
-        const newLocale = (e.target && e.target.dataset && e.target.dataset.lang) || 'en'
-        window.location.assign(window.location.pathname.replace(/\/[a-zA-Z-]+/, '/' + newLocale))
+        const newLocale =
+          (e.target && e.target.dataset && e.target.dataset.lang) || 'en'
+        window.location.assign(
+          window.location.pathname.replace(/\/[a-zA-Z-]+/, '/' + newLocale)
+        )
       })
     } else {
       currentLangElement = el
@@ -25,17 +30,18 @@
 
   langPickerTogglerElement.addEventListener('click', function () {
     langPickerElement.classList.toggle('hidden')
-    const isAriaExpanded = langPickerTogglerElement.getAttribute('aria-expanded') === 'true'
+    const isAriaExpanded =
+      langPickerTogglerElement.getAttribute('aria-expanded') === 'true'
     langPickerTogglerElement.setAttribute('aria-expanded', !isAriaExpanded)
   })
 })()
-
 ;(function () {
-  const scrollToTop = document.getElementById('scroll-to-top');
+  const scrollToTop = document.getElementById('scroll-to-top')
 
-  (window.onscroll = function () {
+  ;(window.onscroll = function () {
     window.requestAnimationFrame(function () {
-      scrollToTop.style.display = window.pageYOffset > window.innerHeight ? 'block' : 'none'
+      scrollToTop.style.display =
+        window.pageYOffset > window.innerHeight ? 'block' : 'none'
     })
   })()
 
@@ -44,7 +50,6 @@
     window.scrollTo(0, 0)
   })
 })()
-
 ;(function () {
   const contributorCard = document.querySelector('.contributor-card')
 
@@ -53,22 +58,27 @@
   }
 
   const contributorAvatar = contributorCard.querySelector('#contributor-avatar')
-  const contributorUsername = contributorCard.querySelector('#contributor-username')
-  const contributorContributions = contributorCard.querySelector('#contributor-contributions')
+  const contributorUsername = contributorCard.querySelector(
+    '#contributor-username'
+  )
+  const contributorContributions = contributorCard.querySelector(
+    '#contributor-contributions'
+  )
   const loadingSpinner = contributorCard.querySelector('.spinner-border')
 
   if (window.IntersectionObserver) {
-    const observer = new window.IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.intersectionRatio > 0.5) {
-          // In viewport, fetch a random contributor
-          fetchRandomContributor()
+    const observer = new window.IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.intersectionRatio > 0.5) {
+            // In viewport, fetch a random contributor
+            fetchRandomContributor()
 
-          observer.unobserve(entry.target)
-        }
-      })
-    },
-    { threshold: 0.5 }
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.5 }
     )
 
     observer.observe(document.querySelector('footer'))
@@ -77,7 +87,7 @@
     fetchRandomContributor()
   }
 
-  function fetchRandomContributor () {
+  function fetchRandomContributor() {
     let maxContributors
     let fetchDate
     let needToRefetch = false
@@ -94,7 +104,9 @@
 
     // If localStorage and data is less than 1 month old, fetch 1 time
     if (maxContributors && !needToRefetch) {
-      getContributor(Math.floor(Math.random() * Math.floor(parseInt(maxContributors))) + 1)
+      getContributor(
+        Math.floor(Math.random() * Math.floor(parseInt(maxContributors))) + 1
+      )
     } else {
       getMaxContributors(function (randomPage, lastPage) {
         getContributor(randomPage)
@@ -106,16 +118,23 @@
     }
   }
 
-  function getMaxContributors (callback) {
+  function getMaxContributors(callback) {
     const xhr = new window.XMLHttpRequest()
-    xhr.open('GET', 'https://api.github.com/repos/nodejs/node/contributors?per_page=1', true)
+    xhr.open(
+      'GET',
+      'https://api.github.com/repos/nodejs/node/contributors?per_page=1',
+      true
+    )
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
           // Get Headers Links last page to generate a random contributor
           const links = linkParser(xhr.getResponseHeader('Link'))
-          const randomPage = Math.floor(Math.random() * Math.floor(parseInt(links.last.page, 10))) + 1
+          const randomPage =
+            Math.floor(
+              Math.random() * Math.floor(parseInt(links.last.page, 10))
+            ) + 1
 
           if (window.localStorage) {
             window.localStorage.setItem('fetch_date', Date.now())
@@ -130,9 +149,14 @@
     xhr.send()
   }
 
-  function getContributor (randomPage) {
+  function getContributor(randomPage) {
     const xhr = new window.XMLHttpRequest()
-    xhr.open('GET', 'https://api.github.com/repos/nodejs/node/contributors?per_page=1&page=' + randomPage, true)
+    xhr.open(
+      'GET',
+      'https://api.github.com/repos/nodejs/node/contributors?per_page=1&page=' +
+        randomPage,
+      true
+    )
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
@@ -147,8 +171,10 @@
           contributorAvatar.parentElement.href = contributor.html_url
           contributorUsername.textContent = contributor.login
           contributorUsername.href = contributor.html_url
-          contributorContributions.textContent = contributor.contributions + ' contributions'
-          contributorContributions.parentElement.href = 'https://github.com/nodejs/node/commits?author=' + contributor.login
+          contributorContributions.textContent =
+            contributor.contributions + ' contributions'
+          contributorContributions.parentElement.href =
+            'https://github.com/nodejs/node/commits?author=' + contributor.login
         } else {
           return contributorCard.parentNode.removeChild(contributorCard)
         }
@@ -158,7 +184,7 @@
     xhr.send()
   }
 
-  function linkParser (linkHeader) {
+  function linkParser(linkHeader) {
     const regex = /<([^?]+\?per_page=1&[a-z]+=([\d]+))>;[\s]*rel="([a-z]+)"/g
     let array = []
     const object = {}
@@ -173,22 +199,21 @@
     return object
   }
 })()
-
 ;(function (d, n) {
   'use strict'
 
   const osMatch = n.platform.match(/(Win|Mac|Linux)/)
   const os = (osMatch && osMatch[1]) || ''
-  const arch = n.userAgent.match(/x86_64|Win64|WOW64/) ||
-    n.cpuClass === 'x64'
-    ? 'x64'
-    : 'x86'
+  const arch =
+    n.userAgent.match(/x86_64|Win64|WOW64/) || n.cpuClass === 'x64'
+      ? 'x64'
+      : 'x86'
   const text = 'textContent' in d ? 'textContent' : 'innerText'
   const buttons = d.querySelectorAll('.home-downloadbutton')
   const downloadHead = d.getElementById('home-downloadhead')
   let dlLocal
 
-  function versionIntoHref (nodeList, filename) {
+  function versionIntoHref(nodeList, filename) {
     const linkEls = Array.prototype.slice.call(nodeList)
     let version
     let el
@@ -198,7 +223,7 @@
       el = linkEls[i]
 
       // Windows 64-bit files for 0.x.x need to be prefixed with 'x64/'
-      if (os === 'Win' && (version[1] === '0' && arch === 'x64')) {
+      if (os === 'Win' && version[1] === '0' && arch === 'x64') {
         el.href += arch + '/'
       }
 
