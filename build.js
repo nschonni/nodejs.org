@@ -278,8 +278,8 @@ function getSource (callback) {
         },
         banner: {
           visible: true,
-          text: 'New security releases to be made available Sep 15, 2020',
-          link: '/en/blog/vulnerability/september-2020-security-releases/'
+          text: 'The OpenJS World CFP is open until Feb 15 - submit your talk ideas!',
+          link: 'https://openjsworld.com/'
         }
       }
     }
